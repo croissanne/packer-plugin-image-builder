@@ -23,7 +23,7 @@ type Client struct {
 	client *http.Client
 }
 
-func NewClient(ctx context.Context, refreshToken string) (*Client, error) {
+func NewClient(ctx context.Context, refreshToken string) *Client {
 	conf := &oauth2.Config{
 		ClientID: "rhsm-api",
 		Endpoint: oauth2.Endpoint{
@@ -35,7 +35,7 @@ func NewClient(ctx context.Context, refreshToken string) (*Client, error) {
 		client: conf.Client(ctx, &oauth2.Token{
 			RefreshToken: refreshToken,
 		}),
-	}, nil
+	}
 }
 
 func (c *Client) Compose(cr *ComposeRequest) (string, error) {

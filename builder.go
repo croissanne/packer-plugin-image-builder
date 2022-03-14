@@ -55,10 +55,7 @@ func (b *Builder) Prepare(raws ...interface{}) ([]string, []string, error) {
 }
 
 func (b *Builder) Run(ctx context.Context, ui packer.Ui, hook packer.Hook) (packer.Artifact, error) {
-	client, err := imagebuilder.NewClient(ctx, b.config.OfflineToken)
-	if err != nil {
-		return nil, err
-	}
+	client := imagebuilder.NewClient(ctx, b.config.OfflineToken)
 
 	cr := imagebuilder.ComposeRequest{
 		Distribution: imagebuilder.Distributions(b.config.Blueprint.Distribution),
