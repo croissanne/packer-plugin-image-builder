@@ -1,3 +1,5 @@
+//go:generate go run github.com/hashicorp/packer-plugin-sdk/cmd/packer-sdc mapstructure-to-hcl2 -type Config,Blueprint,AWSTarget
+
 package main
 
 import (
@@ -59,7 +61,7 @@ func (b *Builder) Run(ctx context.Context, ui packer.Ui, hook packer.Hook) (pack
 	}
 
 	cr := imagebuilder.ComposeRequest{
-		Distribution: "rhel-8",
+		Distribution: imagebuilder.Distributions(b.config.Blueprint.Distribution),
 		Customizations: &imagebuilder.Customizations{
 			Packages: &b.config.Blueprint.Packages,
 		},
@@ -68,12 +70,10 @@ func (b *Builder) Run(ctx context.Context, ui packer.Ui, hook packer.Hook) (pack
 		ir := imagebuilder.ImageRequest{
 			Architecture: t.Architecture,
 			ImageType:    "ami",
-			UploadRequests: []imagebuilder.UploadRequest{
-				{
-					Type: imagebuilder.UploadTypes_aws,
-					Options: imagebuilder.AWSUploadRequestOptions{
-						ShareWithAccounts: t.ShareWithAccounts,
-					},
+			UploadRequest: imagebuilder.UploadRequest{
+				Type: imagebuilder.UploadTypesAws,
+				Options: imagebuilder.AWSUploadRequestOptions{
+					ShareWithAccounts: t.ShareWithAccounts,
 				},
 			},
 		}

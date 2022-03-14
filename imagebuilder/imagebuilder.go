@@ -4,7 +4,7 @@
 //
 //   https://access.redhat.com/articles/3626371
 
-//go:generate go run github.com/deepmap/oapi-codegen/cmd/oapi-codegen --package=imagebuilder --generate types -o image-builder-api.gen.go image-builder-api.yaml
+//go:generate go run github.com/deepmap/oapi-codegen/cmd/oapi-codegen --package=imagebuilder --generate types -o imagebuilderapi.gen.go openapi.json
 
 package imagebuilder
 
