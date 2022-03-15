@@ -1,0 +1,10 @@
+{
+    "name": "packer-plugin-image-builder",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".."
+    },
+    "extensions": [
+        "golang.Go"
+    ]
+}
